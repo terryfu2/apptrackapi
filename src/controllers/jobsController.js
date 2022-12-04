@@ -72,10 +72,11 @@ export const createNewJob = (req, res) => {
         job.categoryName,
         job.description,
         job.locationName,
-        job.deadline
+        job.deadline,
+        job.link
     ];
 
-    let sqlQuery = 'INSERT INTO descriptions (companyName,categoryName,description,locationName,deadline) VALUES ( ? , ? , ? , ? , ? )';
+    let sqlQuery = 'INSERT INTO descriptions (companyName,categoryName,description,locationName,deadline,link) VALUES ( ? , ? , ? , ? , ? ,? )';
 
     dbConnection.query(sqlQuery,jobObj, (err, result) => {
         if (err) throw err;
