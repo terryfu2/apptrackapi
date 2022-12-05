@@ -47,3 +47,18 @@ export const createNewStudent = (req, res) => {
     });
 };
 
+
+//need a third question mark is there a way to explictly bind in the java script?
+
+export const updateCurrentStudent = (req, res) => {
+
+    const studentid = req;
+    const studentObj = [
+        student.email,
+        student.password
+    ];
+
+    let sqlQuery = 'UPDATE sutdents SET (email = ?, password = ?) where email = ?'
+
+}
+

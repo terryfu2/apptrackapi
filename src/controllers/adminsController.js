@@ -12,3 +12,39 @@ export const getAdminByEmails = (req, res) => {
     });
 };
 
+//todo just finishing
+export const updateAdminEmail = (req, res) => {
+    const email = req;
+
+    const aemailobj = [
+        email.new,
+        email.old
+    ];
+
+    let sqlQuery = 'UPDATE admins '
+
+
+}
+
+
+
+// export const updateApplications = (req, res) => {
+//     //todo need to add the where section in that applicationobj
+//         const application = req.body;
+//         const applicationtObj = [
+//             application.currentstatus,
+//             application.dateapplied,
+//             application.notes,
+//             application.sEmail
+//         ];
+    
+//         let sqlQuery = 
+//             'UPDATE applications (currentstatus,dateapplied,notes,sEmail) WHERE ';//todo need to add the where section in that applicationobj and this part
+//         dbConnection.query(sqlQuery,applicationtObj, (err, result) => {
+            
+//             if (err) throw err;
+            
+//             res.status(201).json('Application updated with id: '+ result.insertId);
+//         });
+        
+//     };

@@ -32,3 +32,22 @@ export const createLocation= (req, res) => {
     });
     
 };
+
+//not sure what status(201 or 202 does)
+export const updateLocation = (req, res) => {
+
+    const location = req.body;
+    const obj = [
+        
+        location.country,
+        location.state,
+        location.locationName
+    ]
+
+    let sqlQuery = 'UPDATE locations SETS country = ?, state = ? where locationName = ?';
+    dbConnection.query(sqlQuery, obj, (err, result) => {
+        if (err) throw err;
+
+        res.status(202).json()});
+    
+}
