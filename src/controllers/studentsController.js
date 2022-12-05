@@ -37,7 +37,8 @@ export const createNewStudent = (req, res) => {
     const student = req.body;
     const studentObj = [
         student.email,
-        crypt("salt", student.password)
+        crypt("salt", student.password),
+        student.name
     ];
 
     if (!student.email || !student.password ) {
@@ -47,7 +48,7 @@ export const createNewStudent = (req, res) => {
         });
     }
 
-    let sqlQuery = 'INSERT INTO students (email,password) VALUES ( ? , ? )';
+    let sqlQuery = 'INSERT INTO students (email,password,name) VALUES ( ? , ? , ? )';
 
     dbConnection.query(sqlQuery,studentObj, (err, result) => {
         if (err) throw err; 
