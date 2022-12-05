@@ -59,3 +59,4 @@ export const createSkill = (req, res) => {
     });
     
 };
+

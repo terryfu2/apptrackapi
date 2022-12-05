@@ -30,3 +30,18 @@ export const createCompany = (req, res) => {
     });
     
 };
+
+export const updateCompanyName = (req, res) => {
+    const oldCompanyNaem = req.body
+    const obj = [
+        company.companyName,
+        company.oldName
+    ];
+
+    let sqlQuery = 'UPDATE companies SET companyName = ? where companyName = ?';
+    dbConnection.query(sqlQuery, obj, (err, result) => {
+        if(err) throw err;
+        
+        res.status(201).json();
+    });
+}

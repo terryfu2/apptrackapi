@@ -30,3 +30,23 @@ export const createCategory= (req, res) => {
     });
     
 };
+
+
+export const updateCategory = (req, res) => {
+
+    const category = req.body;
+    const cObj = [
+        category.categoryName,
+        category.oldName
+        
+    ];
+
+    let sqlQuery = 'UPDATE categories SET categoryName = ? where categoryName = ?';
+    dbConnection.query(sqlQuery,cObj, (err, result) => {
+        
+        if (err) throw err;
+        
+        res.status(201).json();
+    });
+    
+};
