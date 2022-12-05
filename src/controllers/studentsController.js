@@ -21,12 +21,30 @@ export const getStudentByEmails = (req, res) => {
     console.log(studentObj);
     
     //const pass = (req.params.password).hashCode();
-    let sqlQuery = `SELECT * FROM students WHERE email = ? AND password = ? `;
+    let sqlQuery = `SELECT name,email FROM students WHERE email = ? AND password = ? `;
      
 
     dbConnection.query(sqlQuery, [student.email,newP ], (error, result, fields) => {
         if (error) throw error;
         res.status(200).json(result);
+    });
+};
+
+
+export const updateStudent = (req, res) => {
+    
+    const student = req.body;
+    const studentObj = [
+        student.name
+    ];
+
+
+    let sqlQuery = `UPDATE students SET name = ? WHERE email = '${student.email}'`
+
+    dbConnection.query(sqlQuery, studentObj,  (error, result) => {
+        if (error) throw error;
+        
+        res.json();
     });
 };
 

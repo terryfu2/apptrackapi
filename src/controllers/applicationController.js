@@ -28,10 +28,14 @@ export const createApplications = (req, res) => {
         application.currentstatus,
         application.dateapplied,
         application.notes,
-        application.sEmail
+        application.sEmail,
+        application.deadline,
+        application.company,
+        application.role,
+        application.link
     ];
 
-    let sqlQuery = 'INSERT INTO applications (currentstatus,dateapplied,notes,sEmail) VALUES ( ? , ? , ? , ? )';
+    let sqlQuery = 'INSERT INTO applications (currentstatus,dateapplied,notes,sEmail,deadline,company,role,link) VALUES ( ? , ? , ? , ? ,? , ? , ? ,? )';
     dbConnection.query(sqlQuery,applicationtObj, (err, result) => {
         
         if (err) throw err;
@@ -41,3 +45,27 @@ export const createApplications = (req, res) => {
     
 };
 
+export const updateApplication = (req, res) => {
+    
+    const applicationid = parseInt(req.params.applicationid);
+    const application = req.body;
+    const applicationtObj = [
+        application.currentstatus,
+        application.dateapplied,
+        application.notes,
+        application.sEmail,
+        application.deadline,
+        application.company,
+        application.role,
+        application.link
+    ];
+
+
+    let sqlQuery = `UPDATE applications SET currentstatus = ?, dateapplied = ? ,notes = ?,sEmail = ?,deadline = ? ,company = ? ,role = ?,link = ? WHERE applicationid = ${applicationid}`
+
+    dbConnection.query(sqlQuery, applicationtObj,  (error, result) => {
+        if (error) throw error;
+        
+        res.json();
+    });
+};
