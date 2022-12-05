@@ -2,7 +2,7 @@ import dbConnection from '../database/dbConnection';
 
 export const getJobs = (req, res) => {
 
-    let sqlQuery = 'SELECT * FROM jobs';
+    let sqlQuery = 'SELECT * FROM descriptions';
 
     dbConnection.query(sqlQuery, (error, results) => {
         if (error) throw error;
