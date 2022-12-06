@@ -2,6 +2,11 @@ import dbConnection from '../database/dbConnection';
 
 export const getStudents = (req, res) => {
     //TODO: ADMIN
+    if(!req.session.admin) {
+        res.status(401).send("Unauthorized: You must be an admin to get all students");
+        return;
+    }
+
     let sqlQuery = 'SELECT * FROM students';
 
     dbConnection.query(sqlQuery, (error, results) => {
@@ -9,6 +14,7 @@ export const getStudents = (req, res) => {
         res.status(200).json(results);
     });
 };
+
 
 export const getStudentByEmails = (req, res) => {
     //TODO: AUTH
@@ -41,7 +47,7 @@ export const updateStudent = (req, res) => {
     ];
 
 
-    let sqlQuery = `UPDATE students SET name = ? WHERE email = '${student.email}'`
+    let sqlQuery = `UPDATE students SET name = ? WHERE email = '${req.session.email}'`
 
     dbConnection.query(sqlQuery, studentObj,  (error, result) => {
         if (error) throw error;

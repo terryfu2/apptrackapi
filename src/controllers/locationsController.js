@@ -2,7 +2,7 @@ import dbConnection from '../database/dbConnection';
 
 
 export const getLocations = (req, res) => {
-    //TODO: ADMIN
+    
 
     let sqlQuery = `SELECT * FROM locations`;
 
@@ -15,7 +15,11 @@ export const getLocations = (req, res) => {
 
 
 export const createLocation= (req, res) => {
-    //TODO: ADMIN
+
+    if(!req.session.admin) {
+        res.status(401).send("Unauthorized: You must be an admin to create locations");
+        return;
+    }
 
     const location = req.body;
     const cObj = [

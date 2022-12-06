@@ -30,7 +30,6 @@ export const getApplicationByStudent = (req, res) => {
 }; 
 
 export const createApplications = (req, res) => {
-    // TODO: AUTH
 
     const application = req.body;
     const applicationtObj = [
@@ -55,7 +54,6 @@ export const createApplications = (req, res) => {
 };
 
 export const updateApplication = (req, res) => {
-    // TODO: AUTH
     
     const applicationid = parseInt(req.params.applicationid);
     const application = req.body;
@@ -63,7 +61,7 @@ export const updateApplication = (req, res) => {
         application.currentstatus,
         application.dateapplied,
         application.notes,
-        application.sEmail,
+        req.session.email,
         application.deadline,
         application.company,
         application.role,

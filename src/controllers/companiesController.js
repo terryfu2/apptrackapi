@@ -3,7 +3,10 @@ import dbConnection from '../database/dbConnection';
 
 export const getCompanies = (req, res) => {
     //TODO: ADMIN
-
+    if(!req.session.admin) {
+        res.status(401).send("Unauthorized: You must be an admin to get all companies");
+        return;
+    }
     let sqlQuery = `SELECT * FROM companies`;
 
     dbConnection.query(sqlQuery, (error, results) => {
@@ -16,6 +19,11 @@ export const getCompanies = (req, res) => {
 
 export const createCompany = (req, res) => {
     //TODO: ADMIN
+
+    if(!req.session.admin) {
+        res.status(401).send("Unauthorized: You must be an admin to create companies");
+        return;
+    }
 
     const company = req.body;
     const cObj = [

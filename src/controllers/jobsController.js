@@ -67,6 +67,11 @@ export const getJobsByCompany = (req, res) => {
 export const createNewJob = (req, res) => {
     //TODO: ADMIN
 
+    if(!req.session.admin) {
+        res.status(401).send("Unauthorized: You must be an admin to create jobs");
+        return;
+    }
+
     const job = req.body;
     const jobObj = [
         job.companyName,

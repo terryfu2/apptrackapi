@@ -3,7 +3,10 @@ import dbConnection from '../database/dbConnection';
 
 export const getCategories = (req, res) => {
     //TODO: ADMIN
-
+    if(!req.session.admin) {
+        res.status(401).send("Unauthorized: You must be an admin to get all categories");
+        return;
+    }
     let sqlQuery = `SELECT * FROM categories`;
 
     dbConnection.query(sqlQuery, (error, results) => {
@@ -16,7 +19,10 @@ export const getCategories = (req, res) => {
 
 export const createCategory= (req, res) => {
     //TODO: ADMIN
-
+    if(!req.session.admin) {
+        res.status(401).send("Unauthorized: You must be an admin to create categories");
+        return;
+    }
     const category = req.body;
     const cObj = [
         category.categoryName
