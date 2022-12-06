@@ -85,7 +85,13 @@ app.get('/home', function(request, response) {
 	response.end();
 });
 
+app.get('/user/me', function(request,response){
 
+	if(request.session.loggedin){
+		response.json(request.session.email);
+	}
+	response.end();
+});
 
 
 app.listen( port, () => {
