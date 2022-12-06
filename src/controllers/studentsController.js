@@ -1,7 +1,7 @@
 import dbConnection from '../database/dbConnection';
 
 export const getStudents = (req, res) => {
-
+    //TODO: ADMIN
     let sqlQuery = 'SELECT * FROM students';
 
     dbConnection.query(sqlQuery, (error, results) => {
@@ -11,6 +11,7 @@ export const getStudents = (req, res) => {
 };
 
 export const getStudentByEmails = (req, res) => {
+    //TODO: AUTH
 
     const student = req.body;
     const newP = crypt("salt", student.password)
@@ -32,6 +33,7 @@ export const getStudentByEmails = (req, res) => {
 
 
 export const updateStudent = (req, res) => {
+    //TODO: AUTH
     
     const student = req.body;
     const studentObj = [
@@ -51,6 +53,7 @@ export const updateStudent = (req, res) => {
 
 
 export const createNewStudent = (req, res) => {
+    //TODO: SIGNUP
 
     const student = req.body;
     const studentObj = [

@@ -65,6 +65,7 @@ export const getJobsByCompany = (req, res) => {
 };
 
 export const createNewJob = (req, res) => {
+    //TODO: ADMIN
 
     const job = req.body;
     const jobObj = [

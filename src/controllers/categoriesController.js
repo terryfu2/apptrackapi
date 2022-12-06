@@ -2,6 +2,7 @@ import dbConnection from '../database/dbConnection';
 
 
 export const getCategories = (req, res) => {
+    //TODO: ADMIN
 
     let sqlQuery = `SELECT * FROM categories`;
 
@@ -14,6 +15,7 @@ export const getCategories = (req, res) => {
 
 
 export const createCategory= (req, res) => {
+    //TODO: ADMIN
 
     const category = req.body;
     const cObj = [

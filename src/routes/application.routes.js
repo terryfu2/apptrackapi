@@ -5,7 +5,8 @@ import {getApplications,createApplications,getApplicationByStudent,updateApplica
 
 router.get('/', getApplications); 
 router.post('/add', createApplications);
-router.get('/applications/:sEmail', getApplicationByStudent);
+//router.get('/applications/:sEmail', getApplicationByStudent);
 router.put('/edit/:applicationid', updateApplication); 
+router.get('/me', getApplicationByStudent);
 
 export default router;

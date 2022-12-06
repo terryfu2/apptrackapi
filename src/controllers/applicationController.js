@@ -1,9 +1,13 @@
 import dbConnection from '../database/dbConnection';
 
 export const getApplications = (req, res) => {
+    if(!req.session.admin) {
+        res.status(401).send("Unauthorized: You must be an admin to get all applications");
+        return;
+    }
 
     let sqlQuery = 'SELECT * FROM applications';
-    console.log(req.session);
+    console.log(req.session.loggedin);
     dbConnection.query(sqlQuery, (error, results) => {
         if (error) throw error;
         res.status(200).json(results);
@@ -11,24 +15,29 @@ export const getApplications = (req, res) => {
 };
 
 export const getApplicationByStudent = (req, res) => {
+    if(!req.session.email) {
+        res.status(401).send("Unauthorized: You must be logged in to see your applications");
+        return;
+    }
 
-    const find = req.params.sEmail;
+    const find = req.session.email;
     let sqlQuery = `SELECT * FROM applications WHERE sEmail = '${find}'`;    
 
     dbConnection.query(sqlQuery, (error, result) => {
         if (error) throw error;
         res.status(200).json(result);
     });
-};
+}; 
 
 export const createApplications = (req, res) => {
+    // TODO: AUTH
 
     const application = req.body;
     const applicationtObj = [
         application.currentstatus,
         application.dateapplied,
         application.notes,
-        application.sEmail,
+        req.session.email,
         application.deadline,
         application.company,
         application.role,
@@ -46,6 +55,7 @@ export const createApplications = (req, res) => {
 };
 
 export const updateApplication = (req, res) => {
+    // TODO: AUTH
     
     const applicationid = parseInt(req.params.applicationid);
     const application = req.body;

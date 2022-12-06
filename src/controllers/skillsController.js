@@ -2,6 +2,7 @@ import dbConnection from '../database/dbConnection';
 
 
 export const getSkillsAll = (req, res) => {
+    //TODO: ADMIN
 
     let sqlQuery = `SELECT * FROM allskills`;
 
@@ -12,6 +13,7 @@ export const getSkillsAll = (req, res) => {
 };
 
 export const createAllSkill = (req, res) => {
+    //TODO: ADMIN
 
     const skill = req.body;
     const skillObj = [
@@ -30,6 +32,7 @@ export const createAllSkill = (req, res) => {
 };
 
 export const getSkillsFromJob = (req, res) => {
+    //TODO: ADMIN
 
     const find = parseInt(req.params.jobid);
     let sqlQuery = `SELECT * FROM skills WHERE jobid = ${find}`;
@@ -42,6 +45,7 @@ export const getSkillsFromJob = (req, res) => {
 
 
 export const createSkill = (req, res) => {
+    //TODO: ADMIN
 
     const skill = req.body;
     const skillObj = [

@@ -2,6 +2,7 @@ import dbConnection from '../database/dbConnection';
 
 
 export const getCompanies = (req, res) => {
+    //TODO: ADMIN
 
     let sqlQuery = `SELECT * FROM companies`;
 
@@ -14,6 +15,7 @@ export const getCompanies = (req, res) => {
 
 
 export const createCompany = (req, res) => {
+    //TODO: ADMIN
 
     const company = req.body;
     const cObj = [
