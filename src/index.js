@@ -86,13 +86,34 @@ app.get('/home', function(request, response) {
 });
 
 app.get('/user/me', function(request,response){
+	let email = request.session.email;
 
-	if(request.session.loggedin){
-		response.json(request.session.email);
+	if (email) {
+
+		dbConnection.query('SELECT email FROM admins WHERE Email = ? ', [email], function(error, results, fields) {
+			if (error) throw error;
+
+			if (results.length > 0) {
+				response.status(200).json(results);
+				response.end();
+				return;
+			}		
+
+			dbConnection.query('SELECT name,email FROM students WHERE email = ?', [email], function(error, results, fields) {
+				if (error) throw error;
+	
+				if (results.length > 0) {
+					response.status(200).json(results);
+				} 		
+				response.end();
+			});
+		});
+	} else {
+		response.send('Please enter Username and Password!');
+		response.end();
 	}
-	response.end();
 });
-
+ 
 
 app.listen( port, () => {
     console.log(`Server running in port ${port}`);
