@@ -3,7 +3,7 @@ import dbConnection from '../database/dbConnection';
 export const getApplications = (req, res) => {
 
     let sqlQuery = 'SELECT * FROM applications';
-
+    console.log(req.session);
     dbConnection.query(sqlQuery, (error, results) => {
         if (error) throw error;
         res.status(200).json(results);
