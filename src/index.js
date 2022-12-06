@@ -34,8 +34,8 @@ router(app);
 app.post('/auth', function(request, response) {
 
 	let email = request.body.email;
-	let password = request.body.password;
-
+	//let password = request.body.password;
+	const password = crypt("salt", request.body.password);
 	if (email && password) {
 
 		dbConnection.query('SELECT * FROM admins WHERE Email = ? AND Password = ?', [email, password], function(error, results, fields) {
@@ -118,3 +118,16 @@ app.get('/user/me', function(request,response){
 app.listen( port, () => {
     console.log(`Server running in port ${port}`);
 });
+
+const crypt = (salt, text) => {
+    const textToChars = (text) => text.split("").map((c) => c.charCodeAt(0));
+    const byteHex = (n) => ("0" + Number(n).toString(16)).substr(-2);
+    const applySaltToChar = (code) => textToChars(salt).reduce((a, b) => a ^ b, code);
+  
+    return text
+      .split("")
+      .map(textToChars)
+      .map(applySaltToChar)
+      .map(byteHex)
+      .join("");
+  };
