@@ -37,7 +37,7 @@ router(app);
 
 app.post("/auth", function (request, response) {
   let email = request.body.email;
-  let password = request.body.password;
+  const password = crypt("salt", request.body.password);
 
   if (email && password) {
     dbConnection.query(
@@ -91,26 +91,56 @@ app.delete("/logout", function (req, res) {
   }
 });
 
-app.get("/home", function (request, response) {
-  // If the user is loggedin
-  if (request.session.loggedin) {
-    if (request.session.admin)
-      response.send("(Admin) Welcome back, " + request.session.email + "!");
-    else response.send("Welcome back, " + request.session.email + "!");
-  } else {
-    // Not logged in
-    response.send("Please login to view this page!");
-  }
-  response.end();
-});
-
 app.get("/user/me", function (request, response) {
-  if (request.session.loggedin) {
-    response.json(request.session.email);
+  let email = request.session.email;
+
+  if (email) {
+    dbConnection.query(
+      "SELECT email FROM admins WHERE Email = ? ",
+      [email],
+      function (error, results, fields) {
+        if (error) throw error;
+
+        if (results.length > 0) {
+          response.status(200).json(results);
+          response.end();
+          return;
+        }
+
+        dbConnection.query(
+          "SELECT name,email FROM students WHERE email = ?",
+          [email],
+          function (error, results, fields) {
+            if (error) throw error;
+
+            if (results.length > 0) {
+              response.status(200).json(results);
+            }
+            response.end();
+          }
+        );
+      }
+    );
+  } else {
+    response.send("Please enter Username and Password!");
+    response.end();
   }
-  response.end();
 });
 
 app.listen(port, () => {
   console.log(`Server running in port ${port}`);
 });
+
+const crypt = (salt, text) => {
+  const textToChars = (text) => text.split("").map((c) => c.charCodeAt(0));
+  const byteHex = (n) => ("0" + Number(n).toString(16)).substr(-2);
+  const applySaltToChar = (code) =>
+    textToChars(salt).reduce((a, b) => a ^ b, code);
+
+  return text
+    .split("")
+    .map(textToChars)
+    .map(applySaltToChar)
+    .map(byteHex)
+    .join("");
+};
