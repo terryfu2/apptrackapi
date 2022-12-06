@@ -1,20 +1,16 @@
-import dbConnection from '../database/dbConnection';
+import dbConnection from "../database/dbConnection";
 
+export const isAdmin = (req, res) => {
+  if (!req.session.admin) {
+    res.status(200).json({ admin: false });
+    return;
+  }
 
-export const getAdminByEmails = (req, res) => {
-   
+  const find = req.params.email;
+  let sqlQuery = `SELECT * FROM admins WHERE email = '${find}'`;
 
-    if(!req.session.admin) {
-        res.status(401).send("Unauthorized: You must be an admin to get all admins");
-        return;
-    }
-
-    const find = req.params.email;
-    let sqlQuery = `SELECT * FROM admins WHERE email = '${find}'`;    
-
-    dbConnection.query(sqlQuery, (error, result) => {
-        if (error) throw error;
-        res.status(200).json(result[0]);
-    });
+  dbConnection.query(sqlQuery, (error) => {
+    if (error) throw error;
+    res.status(200).json({ admin: true });
+  });
 };
-

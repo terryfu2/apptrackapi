@@ -1,9 +1,8 @@
-import express from 'express';
+import express from "express";
 const router = express.Router();
 
-import { getAdminByEmails} from '../controllers/adminsController'
+import { isAdmin } from "../controllers/adminsController";
 
-router.get('/email/:email', getAdminByEmails);
-
+router.get("/me", isAdmin);
 
 export default router;

@@ -77,6 +77,20 @@ app.post("/auth", function (request, response) {
   }
 });
 
+app.delete("/logout", function (req, res) {
+  if (req.session) {
+    req.session.destroy((err) => {
+      if (err) {
+        res.status(400).send("Unable to log out");
+      } else {
+        res.send("Logout successful");
+      }
+    });
+  } else {
+    res.end();
+  }
+});
+
 app.get("/home", function (request, response) {
   // If the user is loggedin
   if (request.session.loggedin) {
